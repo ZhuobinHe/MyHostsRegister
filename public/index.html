@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Host IP Registry</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Cloudflare Workers + D1</p>
+        <h1>Host IP Registry</h1>
+        <p>注册和查询个人主机的公网 IPv4 / IPv6 地址。</p>
+      </header>
+
+      <nav class="tabs" aria-label="操作类型">
+        <button class="tab active" data-panel="register" type="button">主机注册</button>
+        <button class="tab" data-panel="resolve" type="button">IP 查询</button>
+        <button class="tab" data-panel="records" type="button">全部记录</button>
+      </nav>
+
+      <section class="card panel active" id="register-panel">
+        <h2>主机注册</h2>
+        <form data-operation="register">
+          <label>Hostname<input name="hostname" required maxlength="253" placeholder="home-nas"></label>
+          <button type="submit">注册当前来源 IP</button>
+        </form>
+      </section>
+
+      <section class="card panel" id="resolve-panel">
+        <h2>主机 IP 查询</h2>
+        <form data-operation="resolve">
+          <label>Hostname<input name="hostname" required maxlength="253" placeholder="home-nas"></label>
+          <label>IP 类型<select name="type"><option value="v4">IPv4</option><option value="v6">IPv6</option></select></label>
+          <label>输出格式<select name="output"><option value="txt">TXT</option><option value="json">JSON</option></select></label>
+          <button type="submit">查询</button>
+        </form>
+      </section>
+
+      <section class="card panel" id="records-panel">
+        <h2>全部 IP 记录</h2>
+        <form data-operation="records">
+          <label>IP 类型<select name="type"><option value="all">All</option><option value="v4">IPv4</option><option value="v6">IPv6</option></select></label>
+          <label>输出格式<select name="output"><option value="txt">TXT</option><option value="json">JSON</option></select></label>
+          <button type="submit">查询记录</button>
+        </form>
+      </section>
+
+      <section class="card result-card" aria-live="polite">
+        <div class="result-heading"><h2>请求</h2><button id="copy-request" type="button">复制指令</button></div>
+        <pre id="request-preview">选择操作并填写参数</pre>
+        <div class="result-heading"><h2>响应</h2><button id="copy-response" type="button">复制结果</button></div>
+        <p id="response-meta">尚未执行</p>
+        <pre id="response-body"></pre>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
