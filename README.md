@@ -67,6 +67,14 @@ curl -u admin:change-me -X POST \
 
 ## Cloudflare 部署
 
+先生成可审查、可提交的 Worker 编译产物：
+
+```bash
+npm run build
+```
+
+构建结果位于 `dist/index.js`，对应 source map 位于 `dist/index.js.map`。静态页面继续由 `public/` 目录通过 Workers Static Assets 上传，不会内联到 Worker bundle。
+
 ### 1. 创建 D1 数据库
 
 ```bash
@@ -109,6 +117,14 @@ WHERE username = 'admin';
 ```bash
 npm run deploy
 ```
+
+如需明确使用仓库中已生成的编译入口部署：
+
+```bash
+npm run deploy:dist
+```
+
+两个部署命令都会读取 `wrangler.jsonc` 中的 D1 和 Static Assets bindings；前者从 TypeScript 源码即时构建，后者使用 `dist/index.js`。
 
 部署后，Cloudflare 会在边缘为注册请求提供可信的 `CF-Connecting-IP`。不要在 Worker 前增加会让客户端直接控制该请求头的非 Cloudflare 入口。
 
