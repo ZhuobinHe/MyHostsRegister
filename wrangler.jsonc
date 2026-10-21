@@ -12,7 +12,7 @@
     {
       "binding": "DB",
       "database_name": "host-ip-registry",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
+      "database_id": "bcd9bc60-838c-4484-9021-b6234b8343e1",
       "migrations_dir": "migrations"
     }
   ]
